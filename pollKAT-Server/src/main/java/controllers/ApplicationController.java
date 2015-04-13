@@ -21,11 +21,12 @@ import ninja.Results;
 import ninja.params.PathParam;
 
 import com.google.inject.Singleton;
+import java.sql.*;
 
 
 @Singleton
 public class ApplicationController {
-
+    public static SQLDB  sqlDB = new SQLDB();
 	public Result index() {
 
 		return Results.html();
@@ -41,29 +42,38 @@ public class ApplicationController {
 
 	}
 
-	public Result accept_qsn(@PathParam("qsn") String qsn_str ) {
+	public Result accept_qsn(@PathParam("qsn") String qsn_str ) throws Exception {
 
 		System.out.println(qsn_str);
 		// Write qsn to database
+		sqlDB.insertQsn(qsn_str);
 
 		String resp = "Success!";
 
 		return Results.text().render(resp);
 
 	}
-	public Result qns_response(@PathParam("qsnId") String qsn_ID, @PathParam("response") String response_given){
+	public Result qsn_response(@PathParam("qsnId") String qsn_ID, @PathParam("response") String response_given){
 		//increase response count for qsn_ID based on response in DB;
 		String resp = "Success!";
 		return Results.text().render(resp);
 	}
 
-	public Result send_qsns() {
-		String qsns = new String("how many people are there?;how many girls are there?");//String of qsns from db
+	public Result send_qsns() throws Exception {
+		//String results[]  
+				String qsns = new String("how many people are there?;how many girls are there?");//String of qsns from db
+				qsns = sqlDB.getQsn();
+		/*int l = results.length;
+		String qsns = null;
+		for(int i=0; i< l; i++){
+			qsns += results[i] + "@@";
+		}*/
+		 
 		return Results.text().render(qsns);
 
 	}
 	
-	public Result send_stats(){
+	public Result send_stats() throws Exception{
 		String stats =  new String("qsn1;stats1@qsn2;stats2");
 		return Results.text().render(stats);
 	}

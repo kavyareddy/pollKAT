@@ -1,4 +1,5 @@
 controllers/ApplicationController.class
 conf/Module.class
+controllers/SQLDB.class
 controllers/ApplicationController$SimplePojo.class
 conf/Routes.class
