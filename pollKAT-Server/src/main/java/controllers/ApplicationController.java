@@ -53,15 +53,16 @@ public class ApplicationController {
 		return Results.text().render(resp);
 
 	}
-	public Result qsn_response(@PathParam("qsnId") String qsn_ID, @PathParam("response") String response_given){
+	public Result qsn_response(@PathParam("qsnId") String qsn_ID, @PathParam("response") String response_given) throws Exception{
 		//increase response count for qsn_ID based on response in DB;
+		sqlDB.updateRspns(qsn_ID,response_given);
 		String resp = "Success!";
 		return Results.text().render(resp);
 	}
 
 	public Result send_qsns() throws Exception {
 		//String results[]  
-				String qsns = new String("how many people are there?;how many girls are there?");//String of qsns from db
+				String qsns; //= new String("how many people are there?;how many girls are there?");//String of qsns from db
 				qsns = sqlDB.getQsn();
 		/*int l = results.length;
 		String qsns = null;
@@ -75,6 +76,7 @@ public class ApplicationController {
 	
 	public Result send_stats() throws Exception{
 		String stats =  new String("qsn1;stats1@qsn2;stats2");
+		stats = sqlDB.getStats();
 		return Results.text().render(stats);
 	}
 
