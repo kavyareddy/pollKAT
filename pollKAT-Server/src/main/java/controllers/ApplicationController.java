@@ -74,9 +74,9 @@ public class ApplicationController {
 
 	}
 	
-	public Result send_stats() throws Exception{
-		String stats =  new String("qsn1;stats1@qsn2;stats2");
-		stats = sqlDB.getStats();
+	public Result send_stats(@PathParam("qsnId") String qsn_ID) throws Exception{
+		String stats;
+		stats = sqlDB.getStats(qsn_ID);
 		return Results.text().render(stats);
 	}
 

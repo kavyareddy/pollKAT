@@ -33,7 +33,7 @@ public class SQLDB {
 	}
 	public void insertQsn(String Qsn) throws Exception{
 		// inserting data
-		String time =(System.currentTimeMillis()/1000)+"";
+		String time =(System.currentTimeMillis())+"";
 		PreparedStatement prep = con.prepareStatement("insert into Questions values(?,?,?,?,?);");
 		prep.setString(2, Qsn);
 		prep.setString(3, "0");
@@ -45,7 +45,7 @@ public class SQLDB {
 
 		// getting data
 		String qsnResult = "";
-		int i =0;
+		//int i =0;
 		ResultSet res = stat.executeQuery("select * from Questions");
 		while (res.next()) {
 			//qsnResult[i] = res.getString("id")+"$"+res.getString("Question")+"$"+res.getString("TimePosted");
@@ -79,12 +79,13 @@ public class SQLDB {
 		    ps.close();
 		}			
 	}
-	public String getStats() throws Exception{
+	public String getStats(String Qsn_ID) throws Exception{
 		String statsResult = "";
-		int i = 0;
-		ResultSet res = stat.executeQuery("select * from Questions");
+		int id = Integer.parseInt(Qsn_ID);
+		//int i = 0;
+		ResultSet res = stat.executeQuery("select * from Questions WHERE id = "+ id);
 		while (res.next()) {
-			statsResult = statsResult + res.getString("id")+"@"+res.getString("Qsns")+"@"+res.getInt("YesCount")+"@"+res.getInt("NoCount")+"@"+res.getString("TimePosted")+"<--->";
+			statsResult = statsResult + res.getString("id")+"@"+res.getInt("YesCount")+"@"+res.getInt("NoCount");
 		}
 		return statsResult;
 	}

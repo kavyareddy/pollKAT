@@ -32,7 +32,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/post_question/{qsn}").with(ApplicationController.class,"accept_qsn");
         router.GET().route("/post_response/{qsnId}/{response}").with(ApplicationController.class,"qsn_response");
         router.GET().route("/request_questions").with(ApplicationController.class,"send_qsns");
-        router.GET().route("/request_statistics").with(ApplicationController.class,"send_stats");
+        router.GET().route("/request_statistics/{qsnId}").with(ApplicationController.class,"send_stats");
         
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
